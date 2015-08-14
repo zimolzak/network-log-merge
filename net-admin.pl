@@ -17,7 +17,13 @@ open(OUTPUT, "| cat ") || die "can't set up output pipeline: $!"; # swap out cat
 while(<CURL>){
     next if not /\[/;
     s/.*(\[.*)/$1/; # just gets rid of html tags and whitespace
-    print OUTPUT;
+    my @commasep = split(/,/);
+    my $monthdate = $commasep[-2];
+    my $yeartime = $commasep[-1];
+    chomp $yeartime;
+    $monthdate =~ s/ (...)\S* (\d+)/$1 $2/; # " August 13" --> "Aug 13"
+    $yeartime =~ s/\d+ (\S+)/$1/; # "2015 19:45:43" --> "19:45:43"
+    print OUTPUT "$monthdate $yeartime $_";
 }
 
 while(<AUTHLOG>){

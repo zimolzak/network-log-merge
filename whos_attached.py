@@ -12,5 +12,9 @@ password_mgr.add_password(None, top_level_url, username, password)
 handler = urllib.request.HTTPBasicAuthHandler(password_mgr)
 opener = urllib.request.build_opener(handler)
 
-html = opener.open(full_url).read()
-print(html)
+html = opener.open(full_url).read().decode("utf-8").splitlines()
+#                            bytes -->   str       -->  list
+
+for line in html:
+   if line.startswith("var attach_device_list"):
+      print(line)

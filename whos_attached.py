@@ -21,20 +21,27 @@ except uerror.HTTPError as h_error:
     print("Caught error '" + str(h_error) + "'. Quitting.")
     quit()
 
+def un_javascript(s):
+   """Input string assignment code, return what's between the double
+   quotes.
+   """
+   assert s.count('"') == 2
+   s = s[s.index('"') + 1 : ] # delete everything up to 1st quote
+   return s[:s.index('"')]
+
 attach_array = []
 junk_lines = []
 attach_dev_mac = []
 deviceIP_name = []
 for line in html:
    if line.startswith("var attach_device_list"):
-      #print(line)
       attach_device_list = line.replace('var attach_device_list="', '')
       attach_device_list = attach_device_list.replace(' @\#$\&*!";', '').replace('\\', '')
       attach_array = attach_device_list.split(' @#$&*! ')
    elif line.startswith("var attach_dev_mac"):
-      attach_dev_mac.append(line)
+      attach_dev_mac.append(un_javascript(line))
    elif line.startswith("var deviceIP_name") and not line.startswith("var deviceIP_name_num"):
-      deviceIP_name.append(line)
+      deviceIP_name.append(un_javascript(line))
    elif line.startswith("var "):
       junk_lines.append(line)
 

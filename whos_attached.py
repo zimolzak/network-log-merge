@@ -45,14 +45,13 @@ for line in html:
    elif line.startswith("var "):
       junk_lines.append(line)
 
-print("attach_device_list\n====")
-print('\n'.join([e.replace(' ', '\t') for e in attach_array]) + '\n')
+merged = ([e.replace(' ', '\t') for e in attach_array] +
+          [e.replace(' ', '\t__:__:__:__:__:__\t') for e in deviceIP_name])
+merged.sort()
 
+print("attach_device_list + deviceIP_name\n====")
+print("\n".join(merged) + "\n")
 print("attach_dev_mac\n====")
 print('\n'.join(attach_dev_mac) + '\n')
-
-print("deviceIP_name\n====")
-print('\n'.join(deviceIP_name) + '\n')
-
 print("junk lines\n====")
 print("\n".join(junk_lines) + '\n')

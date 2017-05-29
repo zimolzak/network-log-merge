@@ -49,9 +49,18 @@ merged = ([e.replace(' ', '\t') for e in attach_array] +
           [e.replace(' ', '\t__:__:__:__:__:__\t') for e in deviceIP_name])
 merged.sort()
 
+found_macs = []
 print("attach_device_list + deviceIP_name\n====")
+for m in merged:
+   mac = m.split()[1].lower()
+   if mac in attach_dev_mac:
+      found_macs.append(mac)
+      attach_dev_mac.remove(mac)
+
 print("\n".join(merged) + "\n")
-print("attach_dev_mac\n====")
+print("attach_dev_mac (orphaned)\n====")
 print('\n'.join(attach_dev_mac) + '\n')
+print("found macs\n====")
+print('\n'.join(found_macs) + '\n')
 print("junk lines\n====")
 print("\n".join(junk_lines) + '\n')

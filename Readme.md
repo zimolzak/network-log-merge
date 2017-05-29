@@ -1,5 +1,21 @@
-Network admin's log merging script
+Network admin's ad-hoc tools
 ========================
+
+Pull things from the web interface of a consumer Netgear router. Two
+main scripts: `net-admin.pl` and `whos_attached.py`.
+
+whos_attached.py
+--------
+
+Find out what devices are attached to the router. This Netgear router
+for some reason generates an html doc with static JavaScript inside
+it, which then gets run inside the browser to generate a table.
+
+Usage:
+    python3 whos_attached.py
+
+net-admin.pl
+--------
 
 Merge my router's log (accessed via its internal Web server) with my
 Linux auth.log.
@@ -20,4 +36,3 @@ I accomplish this by this process:
 Usage:
 
     ./net-admin.pl > log.txt
-
